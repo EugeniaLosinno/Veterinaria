@@ -38,21 +38,27 @@ import Veterinaria from './Clases/Veterinaria';
 //La funcion obtenerID me devuelve una ID que no este siendo usado
 export function obtenerID(arreglo:Array<number>):number {
     let idAlta : number = 0;
-    let estaID : boolean = true;
-    while (estaID){ 
+    let estaID : boolean = false;
+    
+    /* while (!estaID){ 
+        console.log("ENTRE");
        idAlta = Math.floor(Math.random() * 60);
-       for(let i=0;i<arreglo.length;i++){
-        if (idAlta!=arreglo[i]){
-            arreglo.push(idAlta)
-            estaID = false;
-            
-        }else{
-            estaID = true
-        }
-       }
+       console.log(idAlta);
        
-    }
-    return (idAlta);
+       for(let i=0;i<arreglo.length;i++){
+            if (idAlta!=arreglo[i]){
+                console.log(i);
+                arreglo.push(idAlta)
+                estaID = true;
+            }else{
+                estaID = true
+                console.log("ID REPETIDO");
+                
+            }
+       }
+    } */
+    idAlta = Math.floor(Math.random() * 60);
+    return idAlta;
 }
 
 
@@ -74,15 +80,16 @@ export function darDeAltaCliente (arregloCliente: Array<Cliente>, idClienteAlta:
 
 */
 
-export function darDeAltaVeterinaria (arregloVeterinaria: Array<Veterinaria>, id:number):void {
-    // let nombreVeterinariaAlta : string = readlineSync.question("Ingrese el nombre de la Veterinaria a dar de alta: ");
-    //let direccionVeterinariaAlta : string = readlineSync.question("Ingrese la dirección de la Veterinaria a dar de alta: ");
+export function darDeAltaVeterinaria (arregloVeterinaria: Array<Veterinaria>, id:number):Array<Veterinaria>{
+    let nombreVeterinariaAlta : string = readlineSync.question("Ingrese el nombre de la Veterinaria a dar de alta: ");
+    let direccionVeterinariaAlta : string = readlineSync.question("Ingrese la dirección de la Veterinaria a dar de alta: ");
       
-    let nombreVeterinariaAlta : string = "Fernando";
-    let direccionVeterinariaAlta : string = "San Martín N° 1578";
+   /*  let nombreVeterinariaAlta : string = "Fernando";
+    let direccionVeterinariaAlta : string = "San Martín N° 1578"; */
  
     let newVeterinaria = new Veterinaria(nombreVeterinariaAlta,direccionVeterinariaAlta,id);
     arregloVeterinaria.push(newVeterinaria);
+    return arregloVeterinaria
 } 
 
 export function darDeAltaCliente (arregloCliente: Array<Cliente>, idClienteAlta:number):void {
@@ -193,16 +200,49 @@ export function bajaProveedores(arreglo:Array<Proveedor>){
     }
 }
 
+//FUNCIONES MODIFICACIONES
+
+export function modificarVeterinaria(arreglo:Array<Veterinaria>){
+    console.log(arreglo)
+    let id : number = Number(readlineSync.question("Ingrese el ID de la VETERINARIA que desee Modificar: "));
+ 
+        for (let i:number=0; i<arreglo.length;i++){
+            if(arreglo[i].getIdVeterinaria()==id ){
+                console.table(arreglo[i])
+                console.log(`1)${arreglo[i].getNombreVeterinaria()} \n2) ${arreglo[i].getDireccionVeterinaria()}`);
+                let modificador : number = Number(readlineSync.question("1)modificar nombre\n2)modificar direccion:\n"));  
+                switch(modificador){
+                    case 1:
+                        let nombreNuevo : string =(readlineSync.question(`modificando-->${arreglo[i].getNombreVeterinaria()}\n`));
+                        arreglo[i].setNombreVeterinaria(nombreNuevo)
+                        break
+                    case 2:
+                        let direccionNueva : string =(readlineSync.question(`modificando-->${arreglo[i].getDireccionVeterinaria()}`));
+                        arreglo[i].setDireccionVeterinaria(direccionNueva)
+                        break
+                    default:
+                        break
+                }  
+            }
+
+        }
+
+    
+    
+}
+
+
 
 
 export function verMenuPrincipal():number{
-    console.log("MENU:\n1)MENU VETERINARIAS \n2)MENU CLIENTES \n3)MENU PACIENTES \n4)MENU PROVEEDORES")
+
+    console.log("MENU PRINCIPAL:\n1)MENU VETERINARIAS \n2)MENU CLIENTES \n3)MENU PACIENTES \n4)MENU PROVEEDORES")
     let opcionMP: number = Number(readlineSync.question("INGRESE LA OPCION: "));
     return opcionMP
 }
 
 export function verMenuSecundario():number{
-    console.log("MENU:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n0)SALIR")
+    console.log("MENU SECUNDARIO:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n0)SALIR")
     let opcionMS: number = Number(readlineSync.question("INGRESE LA OPCION: "));
     return opcionMS
 }

@@ -15,12 +15,20 @@ arregloCliente.push(client1);
 var provee1 = new Proveedor_1["default"]("juan", 24965897, 2);
 arregloProveedor.push(provee1);
 var veterinaria1 = new Veterinaria_1["default"]("la mascota", "moreno 58", 3);
+var veterinaria2 = new Veterinaria_1["default"]("Ayacucho", "sarmiento 438", 4);
+var veterinaria3 = new Veterinaria_1["default"]("fer", "Belgrano 432", 67);
 arregloVeterinaria.push(veterinaria1);
+arregloVeterinaria.push(veterinaria2);
+arregloVeterinaria.push(veterinaria3);
 var mascota1 = new Paciente_1["default"]("Paco", "GATO", false, 1);
 arregloPaciente.push(mascota1);
-var opcionMP = 0;
-var opcionMS = 0;
+var opcionMP = -1;
+var opcionMS = -1;
 var idNuevo;
+console.log(arregloCliente);
+console.log(arregloProveedor);
+console.log(arregloVeterinaria);
+console.log(arregloPaciente);
 while (opcionMP != 4) {
     opcionMP = (0, funciones_1.verMenuPrincipal)();
     switch (opcionMP) {
@@ -28,13 +36,16 @@ while (opcionMP != 4) {
             opcionMS = (0, funciones_1.verMenuSecundario)();
             switch (opcionMS) {
                 case 1:
-                    idNuevo = (0, funciones_1.obtenerID)(arregloID);
-                    (0, funciones_1.darDeAltaVeterinaria)(arregloVeterinaria, idNuevo);
+                    console.log(arregloVeterinaria);
+                    var idNuevo_1 = (0, funciones_1.obtenerID)(arregloID);
+                    (0, funciones_1.darDeAltaVeterinaria)(arregloVeterinaria, idNuevo_1);
                     break;
                 case 2:
+                    console.log(arregloVeterinaria);
                     (0, funciones_1.bajaVeterinarias)(arregloVeterinaria);
                     break;
                 case 3:
+                    (0, funciones_1.modificarVeterinaria)(arregloVeterinaria);
                     break;
                 case 0:
                     opcionMS = 0;
@@ -45,6 +56,7 @@ while (opcionMP != 4) {
                     opcionMS = 0;
                     (0, funciones_1.verMenuSecundario)();
             }
+            break;
         case 2:
             opcionMS = (0, funciones_1.verMenuSecundario)();
             switch (opcionMS) {
@@ -66,6 +78,7 @@ while (opcionMP != 4) {
                     opcionMS = 0;
                     (0, funciones_1.verMenuSecundario)();
             }
+            break;
         case 3:
             opcionMS = (0, funciones_1.verMenuSecundario)();
             switch (opcionMS) {
@@ -107,6 +120,9 @@ while (opcionMP != 4) {
                 default:
                     opcionMS = 0;
                     (0, funciones_1.verMenuSecundario)();
+                    break;
             }
+        case 0:
+            break;
     }
 }
