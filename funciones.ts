@@ -33,6 +33,20 @@ export function obtenerID(arregloID:Array<number>):number {
     return (idAlta);
 }
 
+//esta funcion me devuelve true si la ID ingresada es de un clinte y falso caso contrario
+export function estaIDCliente (arregloCliente:Array<Cliente>,idCliente:number): boolean {
+    let laEncontre : boolean = false;
+    let i : number = 0;
+
+    while (i < arregloCliente.length && !laEncontre){
+        if (arregloCliente[i].getIdCliente() == idCliente){
+            laEncontre = true;
+        }else{ i++;}
+    }
+
+    return(laEncontre);
+}
+
 export function darDeAltaVeterinaria (arregloVeterinaria: Array<Veterinaria>, id:number):void {
     let nombreVeterinariaAlta : string = readlineSync.question("Ingrese el nombre de la Veterinaria a dar de alta: ").toUpperCase();
     let direccionVeterinariaAlta : string = readlineSync.question("Ingrese la direccion de la Veterinaria a dar de alta: ").toUpperCase();
@@ -92,8 +106,8 @@ export function darDeAltaProveedor (arregloProveedor: Array<Proveedor>, idProvee
     console.log("Las Proveedore activos son:");
     console.table(arregloProveedor);
 }
-
-export function buscarIdCliente(arregloCliente:Array<Cliente>):number {
+////NO LA ESTAMOS USANDO
+/*export function buscarIdCliente(arregloCliente:Array<Cliente>):number {
     //listar y mostrar clientes id y nombre
     console.log();
     console.log("Listado de Clientes");
@@ -115,7 +129,7 @@ export function buscarIdCliente(arregloCliente:Array<Cliente>):number {
     }
     return 0;   //para evitar error en la funcion
 }
-
+*/
 //---Funciones para dar las bajas
 export function darDeBajaIDArreglo (id:number, arregloID:Array<number>){
     let i: number = 0;
@@ -129,6 +143,7 @@ export function darDeBajaIDArreglo (id:number, arregloID:Array<number>){
 }
 
 export function darDeBajaVeterinaria (arregloVeterinaria:Array<Veterinaria>, arregloID:Array<number>){ 
+    console.table(arregloVeterinaria);
     let idBajaVeterinaria : number = Number(readlineSync.question("Ingrese el ID de Veterinaria que desee borrar: "));
     let estaID : boolean = false;
     let i : number = 0;
@@ -145,11 +160,12 @@ export function darDeBajaVeterinaria (arregloVeterinaria:Array<Veterinaria>, arr
     }
     if(!estaID){
         console.log("La ID de Veterinaria ingresada no existe");
-        console.table(arregloVeterinaria);
+   
     }
 }
 
 export function darDeBajaCliente(arregloCliente:Array<Cliente>, arregloPaciente:Array<Paciente>, arregloID:Array<number>){ 
+    console.table(arregloCliente);
     let idBajaCliente : number = Number(readlineSync.question("Ingrese el ID del Cliente que desee borrar: "));
     let estaID : boolean = false;
     let i : number = 0;
@@ -167,7 +183,7 @@ export function darDeBajaCliente(arregloCliente:Array<Cliente>, arregloPaciente:
     }
     if(!estaID){
         console.log("La ID del Cliente ingresado no existe");
-        console.table(arregloCliente);
+  
     }
 }
 
@@ -181,13 +197,15 @@ export function darDeBajaPacienteCliente (arregloPaciente:Array<Paciente>, idCli
 }
 
 export function darDeBajaPaciente (arregloPaciente:Array<Paciente>){
-    /// agregar ID
+    
+    console.table(arregloPaciente);
+    let idMascotaBaja : number = Number(readlineSync.question("Ingrese la ID de la Mascota que desea borra: "))
     let nombreMascotaBaja : string = readlineSync.question("Ingrese el nombre de la Mascota que desea borra: ").toUpperCase();
     let estaNombre : boolean = false;
     let i : number = 0;
 
     while (!estaNombre && i < arregloPaciente.length){    
-        if(nombreMascotaBaja == arregloPaciente[i].getNombrePaciente()){
+        if((nombreMascotaBaja == arregloPaciente[i].getNombrePaciente()) && (idMascotaBaja == arregloPaciente[i].getIdPaciente())){
             arregloPaciente.splice(i,1)
             console.log(`El Paciente ${nombreMascotaBaja} fue borrado`);
             estaNombre = true;
@@ -196,12 +214,13 @@ export function darDeBajaPaciente (arregloPaciente:Array<Paciente>){
         }
     }
     if(!estaNombre){
-        console.log("El nombre del Paciente ingresado no existe");
-        console.table(arregloPaciente);
+        console.log("El Paciente ingresado no existe");
+        
     }
 }    
 
-export function darDeBajaProveedor (arregloProveedor:Array<Proveedor>, arrrayID:Array<number>){ 
+export function darDeBajaProveedor (arregloProveedor:Array<Proveedor>, arrrayID:Array<number>){
+    console.table(arregloProveedor);
     let idBajaProveedor : number = Number(readlineSync.question("Ingrese el ID del proveedor que desee borrar: "));
     let estaID: boolean = false;
     let i : number = 0;
@@ -217,13 +236,209 @@ export function darDeBajaProveedor (arregloProveedor:Array<Proveedor>, arrrayID:
     }
     if(!estaID){
         console.log("El ID del Proveedor ingresado no existe");
-        console.table(arregloProveedor);
+       
     }
 }
 
+export function registarVisita(arregloCliente:Array<Cliente>){
+    console.table(arregloCliente);
+    let idMascotaVisita : number = Number(readlineSync.question("Ingrese la ID del Cliente que concurre a la veterinaria: "))
+    
+    let estaNombre : boolean = false;
+    let i : number = 0;
+
+    while (!estaNombre && i < arregloCliente.length){    
+        if(idMascotaVisita == arregloCliente[i].getIdCliente()){
+            arregloCliente[i].contarVisitas();
+            arregloCliente[i].calificarVip();
+            console.log(`Al Cliente se le registro una visita`);
+            estaNombre = true;
+        }else{
+            i++;
+        }
+    }
+    if(!estaNombre){
+        console.log("El Paciente ingresado no existe");
+        
+    }
+}
+
+//FUNCIONES MODIFICACIONES
+
+export function modificarVeterinaria(arreglo:Array<Veterinaria>){
+    console.table(arreglo);
+    let i:number = 0;
+    let esta:boolean = false;
+    let id : number = Number(readlineSync.question("Ingrese el ID de CLIENTE que desee Modificar: "));
+    while(esta==false && i<arreglo.length){  
+        
+        if(arreglo[i].getIdVeterinaria()==id ){
+            console.table(arreglo[i]);
+            console.log(`Nombre: ${arreglo[i].getNombreVeterinaria()} \nDireccion: ${arreglo[i].getDireccionVeterinaria()}`);
+            let modificador : number = Number(readlineSync.question("\n1)Modificar nombre\n2)Modificar direccion\n"));
+            switch(modificador){
+                case 1:
+                    let nombreNuevo : string =(readlineSync.question(`Modificando-->${arreglo[i].getNombreVeterinaria()}\n`)).toUpperCase();
+                    arreglo[i].setNombreVeterinaria(nombreNuevo);
+                    break
+                case 2:
+                    let direccionNueva : string =(readlineSync.question(`Modificando-->${arreglo[i].getDireccionVeterinaria()}\n`)).toUpperCase();
+                    arreglo[i].setDireccionVeterinaria(direccionNueva);
+                    break
+                default:
+                    break
+            }  
+            esta = true;  
+            console.log("Los datos de la Veterinaria modificada:");
+            console.table(arreglo[i]);
+            console.log("Las Veterinarias activos son:");
+            console.table(arreglo);
+        }else{
+            i++
+            if(i==arreglo.length){
+                console.log("No esta el ID");
+                break 
+            }
+        }
+    }
+}
+
+export function modificarCliente(arreglo:Array<Cliente>){
+    console.table(arreglo);
+    let i:number = 0;
+    let esta:boolean = false;
+    let id : number = Number(readlineSync.question("Ingrese el ID del CLIENTE que desee Modificar: "));
+    while(esta==false && i<arreglo.length){  
+        if(arreglo[i].getIdCliente()==id ){
+            console.table(arreglo[i])
+            console.log(`Nombre: ${arreglo[i].getNombrePersona()} \nTelefono: ${arreglo[i].getTelefonoPersona()} `);
+            let modificador : number = Number(readlineSync.question("1)Modificar Nombre\n2)modificar Teléfono:\n"));  
+            switch(modificador){
+                case 1:
+                    let nombreNuevo : string =(readlineSync.question(`Modificando-->${arreglo[i].getNombrePersona()}\n`)).toUpperCase();
+                    arreglo[i].setNombrePersona(nombreNuevo)
+                    break
+                case 2:
+                    let telefonoNuevo : number =Number((readlineSync.question(`Modificando-->${arreglo[i].getTelefonoPersona()}\n`)));
+                    arreglo[i].setTelefonoPersona(telefonoNuevo)
+                    break
+                default:
+                    break
+            }
+            esta = true;  
+            console.log("Los datos del Cliente modificado:");
+            console.table(arreglo[i]);
+            console.log("Los Clientes activos son:");
+            console.table(arreglo);
+        }else{
+            i++
+            if(i==arreglo.length){
+                console.log("No esta el ID");
+                break 
+            }
+
+        }
+    }
+    
+}
+
+export function menuModificarMascota(arregloPaciente:Array<Paciente>){
+    console.table(arregloPaciente);
+    let i:number = 0;
+    let esta:boolean = false;
+    let idClienteMascotaModificar : number = Number(readlineSync.question("Ingrese el ID del Cliente que desee Modificar: "));  
+    let nombreMascotaModificar : string = readlineSync.question("Ingrese el nombre de la Mascota que desea Modificar: ").toUpperCase();
+
+    while(!esta && i < arregloPaciente.length){
+        if(arregloPaciente[i].getIdPaciente() == idClienteMascotaModificar && arregloPaciente[i].getNombrePaciente() == nombreMascotaModificar){
+            console.table(arregloPaciente[i]);
+            console.log(`Nombre: ${arregloPaciente[i].getNombrePaciente()} \nEspecie: ${arregloPaciente[i].getEspeciePaciente()} `);
+            let modificador : number = Number(readlineSync.question("1)Modificar Nombre\n2)Modificar Especie:\n"));
+            switch(modificador){
+                case 1:
+                    let nombreMascotaNew : string =(readlineSync.question(`Modificando-->${arregloPaciente[i].getNombrePaciente()}\n`)).toUpperCase();
+                    arregloPaciente[i].setNombrePaciente(nombreMascotaNew);
+                    break
+                case 2:
+                    let especieMascotaModif : string = (readlineSync.question(`Modificando-->${arregloPaciente[i].getEspeciePaciente()}\n`)).toUpperCase();
+                    arregloPaciente[i].setEspeciePaciente(especieMascotaModif);
+                    let exoticaMascotaModif : boolean;
+
+                    if (especieMascotaModif == "GATO" || especieMascotaModif == "PERRO") {
+                        exoticaMascotaModif = false;
+                    } else {
+                        exoticaMascotaModif = true;
+                    }
+                    arregloPaciente[i].setExoticaPaciente(exoticaMascotaModif);
+                    break
+      
+                default:
+                    break
+            }
+            esta = true;
+            console.log("Los datos del Paciente modificado:");
+            console.table(arregloPaciente[i]);
+            console.log("Los Pacientes activos son:");
+            console.table(arregloPaciente);
+        }else{
+            i++
+            if(i==arregloPaciente.length){
+                console.log("No esta el ID");
+                break 
+            }    
+        }
+    }
+}
+
+export function modificarProveedor(arreglo:Array<Proveedor>){
+    console.table(arreglo)
+    let i:number = 0;
+    let esta:boolean = false;
+    let id : number = Number(readlineSync.question("Ingrese el ID de Proveedor que desee Modificar: "));  
+
+    while(esta == false && i < arreglo.length){
+        if(arreglo[i].getIdProveedor()==id){
+            console.table(arreglo[i]);
+            console.log(`Nombre: ${arreglo[i].getNombrePersona()} \nDireccion: ${arreglo[i].getTelefonoPersona()} `);
+            let modificador : number = Number(readlineSync.question("1)Modificar Nombre\n2)Modificar Telefono:\n"));
+            switch(modificador){
+                case 1:
+                    let nombreNuevo : string =(readlineSync.question(`Modificando-->${arreglo[i].getNombrePersona()}\n`)).toUpperCase();
+                    arreglo[i].setNombrePersona(nombreNuevo);
+                    break
+                case 2:
+                    let telefonoNuevo : number =Number((readlineSync.question(`Modificando-->${arreglo[i].getTelefonoPersona()}\n`)));
+                    arreglo[i].setTelefonoPersona(telefonoNuevo);
+                    break
+      
+                default:
+                    break
+            }
+            esta = true;
+            console.log("Los datos del Proveedor modificado:");
+            console.table(arreglo[i]);
+            console.log("Los Proveedores activos son:");
+            console.table(arreglo);
+        }else{
+            i++
+            if(i==arreglo.length){
+                console.log("No esta el ID");
+                break 
+            }    
+        }
+    }
+}
+
+export function pulsar(tecla:number):number{
+    tecla=Number(readlineSync.question("Para continuar pulse cualquier tecla"))
+    console.clear()
+    return 0 
+}
+
+//MENUES
 export function verMenuPrincipal():number{
     console.log();
-    console.log("MENU:\n1)MENU VETERINARIAS \n2)MENU CLIENTES \n3)MENU PACIENTES \n4)MENU PROVEEDORES \n0)SALIR")
+    console.log("MENU:\n1)MENU VETERINARIAS \n2)MENU CLIENTES \n3)MENU PACIENTES \n4)MENU PROVEEDORES\n0)SALIR")
     let opcionMP: number = Number(readlineSync.question("INGRESE LA OPCION: "));
     return opcionMP
 }
@@ -231,6 +446,13 @@ export function verMenuPrincipal():number{
 export function verMenuSecundario():number{
     console.log();
     console.log("MENU:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n0)SALIR")
+    let opcionMS: number = Number(readlineSync.question("INGRESE LA OPCION: "));
+    return opcionMS
+}
+
+export function verMenuSecundarioCliente():number{
+    console.log();
+    console.log("MENU:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n4)VISITA AL VETERINARIO\n0)SALIR")
     let opcionMS: number = Number(readlineSync.question("INGRESE LA OPCION: "));
     return opcionMS
 }

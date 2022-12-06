@@ -17,7 +17,8 @@ export default class Cliente extends Persona{
         this.vip=vip;
         this.nroVisitas=nroVisitas
     }
-    private calificarVip(){//creamos una funcion que setee automaticamente la condicion del cliente VIP o NO
+
+    public calificarVip(){//creamos una funcion que setee automaticamente la condicion del cliente VIP o NO
         if(this.nroVisitas>=5){
             this.vip=true
         }else{
@@ -25,7 +26,7 @@ export default class Cliente extends Persona{
         }
     }
 
-    private contarVisitas(){//funcion para sumar visitas al cliente
+    public contarVisitas(){//funcion para sumar visitas al cliente
         this.nroVisitas++
     }
 
