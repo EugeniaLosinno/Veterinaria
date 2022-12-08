@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PuntoVeterinaria</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <header>
+        <div class="nav_img">
+            <img class="logo" src="./img/logo1.png" alt="logo">
+            <h3>Punto Veterinarias</h3>
+        </div>       
+
+        <nav>
+            <div>
+                <a class="item_nav" href="">Inicio</a>
+                <a class="item_nav" href="">Veterinarias</a>
+                <a class="item_nav" href="">Proveedores</a>
+                <a class="item_nav" href="">Contacto</a>
+            </div>
+            <div class="nav_img">
+                <img class="img1" src="img/img1.png" alt="">
+            </div>
+            
+        </nav>
+        
+    </header>
+    
+    <body>
+        <div class="cards-container">
+            <div class="card">
+                <img class="card-img" src="img/card1.jpg" alt="">
+                <h2>Servicios Para tus mascotas</h2>
+                <p>Podras encontrar la ubicacion mas cercana a tu domcilio de un centro de atencion veterinario</p>
+                <a href="#">Leer más</a>
+            </div>
+            <div class="card">
+                <img class="card-img" src="img/card2.jpg" alt="">
+                <h2>Atencion de primera calidad</h2>
+                <p>Especialistas de primer nivel para garantizar la mejor atencion para tus mascotas</p>
+                <a href="#">Leer más</a>
+            </div>
+            <div class="card">
+                <img class="card-img" src="img/card3.jpg" alt="">
+                <h2>Mascotas Saludables</h2>
+                <p>Con los chequeos frecuentes y un plan de alimentacion de seleccion, tu mascota tendra la mejor calidad de vida posible </p>
+                <a href="#">Leer más</a>
+            </div>
+        </div>
+
+        <section>
+            <h2>Suscribite a nuestra red Veterinaria</h2>
+            <form action="#" method="post">
+                <div>
+                    <label for="POST-name">Nombre:</label>
+                    <input id="POST-name" type="text" placeholder="Tu nombre aqui..." name="name">
+                </div>
+                <div>
+                    <label for="POST-name">Email:</label>
+                    <input id="POST-name" type="email" placeholder="ejemplo@empresamail.com..." name="name">
+                </div>
+                <div>
+                    <span>Cual es tu mascota??</span>
+                    <ul class="cajitas">
+                        <li>
+                            <input id="POST-name" type="checkbox" name="pets" id="pets">
+                            <label for="pets">PERRO</label>
+                        </li>
+                        <li>
+                            <input id="POST-name" type="checkbox" name="pets" id="pets">
+                            <label for="pets">GATO</label>                            
+                        </li>
+                        <li>
+                            <input id="POST-name" type="checkbox" name="pets" id="pets">
+                            <label for="pets">OTRO</label>
+                        </li>
+                    </ul>                 
+                </div>
+                
+                <input type="submit" value="Save">
+                
+            </form>
+        </section>
+
+    </body>
+</html>
