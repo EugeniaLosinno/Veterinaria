@@ -193,6 +193,127 @@ export function bajaProveedores(arreglo:Array<Proveedor>){
     }
 }
 
+//FUNCIONES MODIFICACIONES
+
+export function modificarVeterinaria(arreglo:Array<Veterinaria>){
+    console.table(arreglo)
+    let i:number=0
+    let esta:boolean=false
+    let id : number = Number(readlineSync.question("Ingrese el ID de CLIENTE que desee Modificar: "));
+    while(esta==false && i<arreglo.length){  
+        
+        if(arreglo[i].getIdVeterinaria()==id ){
+            console.table(arreglo[i])
+            console.log(`Nombre: ${arreglo[i].getNombreVeterinaria()} \nDireccion: ${arreglo[i].getDireccionVeterinaria()}`);
+            let modificador : number = Number(readlineSync.question("\n1)Modificar nombre\n2)Modificar direccion\n"));
+            switch(modificador){
+                case 1:
+                    let nombreNuevo : string =(readlineSync.question(`Modificando-->${arreglo[i].getNombreVeterinaria()}\n`));
+                    arreglo[i].setNombreVeterinaria(nombreNuevo)
+                    break
+                case 2:
+                    let direccionNueva : string =(readlineSync.question(`Modificando-->${arreglo[i].getDireccionVeterinaria()}\n`));
+                    arreglo[i].setDireccionVeterinaria(direccionNueva)
+                    break
+                default:
+                    break
+            }  
+            esta=true  
+        }else{
+            i++
+            if(i==arreglo.length){
+                console.log("No esta el ID");
+                break 
+            }
+        }
+    }
+}
+//Modificar CLIENTE
+export function modificarCliente(arreglo:Array<Cliente>){
+    console.table(arreglo)
+    let i:number=0
+    let esta:boolean=false
+    let id : number = Number(readlineSync.question("Ingrese el ID de CLIENTE que desee Modificar: "));
+    while(esta==false && i<arreglo.length){  
+        if(arreglo[i].getIdCliente()==id ){
+            console.table(arreglo[i])
+            console.log(`Nombre: ${arreglo[i].getNombrePersona()} \nTelefono: ${arreglo[i].getTelefonoPersona()} `);
+            let modificador : number = Number(readlineSync.question("1)Modificar Nombre\n2)modificar TELEFONO:\n"));  
+            switch(modificador){
+                case 1:
+                    let nombreNuevo : string =(readlineSync.question(`Modificando-->${arreglo[i].getNombrePersona()}\n`));
+                    arreglo[i].setNombrePersona(nombreNuevo)
+                    break
+                case 2:
+                    let telefonoNuevo : number =Number((readlineSync.question(`Modificando-->${arreglo[i].getTelefonoPersona()}\n`)));
+                    arreglo[i].setTelefonoPersona(telefonoNuevo)
+                    break
+
+                case 3:
+                    //modificar mascota                        
+                    break
+                
+                default:
+                    break
+            }
+            esta=true  
+        }else{
+            i++
+            if(i==arreglo.length){
+                console.log("No esta el ID");
+                break 
+            }
+
+        }
+    }
+    
+}
+
+function menuModificarMascota(){
+
+}
+
+
+export function modificarProveedor(arreglo:Array<Proveedor>){
+    console.table(arreglo)
+    let i:number=0
+    let esta:boolean=false
+    let id : number = Number(readlineSync.question("Ingrese el ID de Proveedor que desee Modificar: "));  
+
+    while(esta==false && i<arreglo.length){
+        if(arreglo[i].getIdProveedor()==id){
+            console.table(arreglo[i])
+            console.log(`Nombre: ${arreglo[i].getNombrePersona()} \nDireccion: ${arreglo[i].getTelefonoPersona()} `);
+            let modificador : number = Number(readlineSync.question("1)Modificar Nombre\n2)Modificar Telefono:\n"));
+            switch(modificador){
+                case 1:
+                    let nombreNuevo : string =(readlineSync.question(`Modificando-->${arreglo[i].getNombrePersona()}\n`));
+                    arreglo[i].setNombrePersona(nombreNuevo)
+                    break
+                case 2:
+                    let telefonoNuevo : number =Number((readlineSync.question(`Modificando-->${arreglo[i].getTelefonoPersona()}\n`)));
+                    arreglo[i].setTelefonoPersona(telefonoNuevo)
+                    break
+      
+                default:
+                    break
+            }
+            esta=true
+        }else{
+            i++
+            if(i==arreglo.length){
+                console.log("No esta el ID");
+                break 
+            }    
+        }
+    }
+}
+
+
+
+
+
+
 export function verMenu():number{
     console.log("MENU:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n0)SALIR")
     let op: number = Number(readlineSync.question("INGRESE LA OPCION: "));

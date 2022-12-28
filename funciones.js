@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.verMenuSecundario = exports.verMenuPrincipal = exports.bajaProveedores = exports.bajaPacientes = exports.bajaClientes = exports.bajaVeterinarias = exports.darDeAltaProveedor = exports.buscarIdCliente = exports.darDeAltaPaciente = exports.darDeAltaCliente = exports.darDeAltaVeterinaria = exports.obtenerID = void 0;
+exports.pulsar = exports.verMenuSecundario = exports.verMenuPrincipal = exports.modificarProveedor = exports.modificarCliente = exports.modificarVeterinaria = exports.bajaProveedores = exports.bajaPacientes = exports.bajaClientes = exports.bajaVeterinarias = exports.darDeAltaProveedor = exports.buscarIdCliente = exports.darDeAltaPaciente = exports.darDeAltaCliente = exports.darDeAltaVeterinaria = exports.obtenerID = void 0;
 var readlineSync = require("readline-sync");
 var Cliente_1 = require("./Clases/Cliente");
 var Paciente_1 = require("./Clases/Paciente");
@@ -39,20 +39,26 @@ var Veterinaria_1 = require("./Clases/Veterinaria");
 //La funcion obtenerID me devuelve una ID que no este siendo usado
 function obtenerID(arreglo) {
     var idAlta = 0;
-    var estaID = true;
-    while (estaID) {
-        idAlta = Math.floor(Math.random() * 60);
-        for (var i = 0; i < arreglo.length; i++) {
-            if (idAlta != arreglo[i]) {
-                arreglo.push(idAlta);
-                estaID = false;
-            }
-            else {
+    var estaID = false;
+    /* while (!estaID){
+        console.log("ENTRE");
+       idAlta = Math.floor(Math.random() * 60);
+       console.log(idAlta);
+       
+       for(let i=0;i<arreglo.length;i++){
+            if (idAlta!=arreglo[i]){
+                console.log(i);
+                arreglo.push(idAlta)
                 estaID = true;
+            }else{
+                estaID = true
+                console.log("ID REPETIDO");
+                
             }
-        }
-    }
-    return (idAlta);
+       }
+    } */
+    idAlta = Math.floor(Math.random() * 60);
+    return idAlta;
 }
 exports.obtenerID = obtenerID;
 /*
@@ -73,19 +79,16 @@ export function darDeAltaCliente (arregloCliente: Array<Cliente>, idClienteAlta:
 
 */
 function darDeAltaVeterinaria(arregloVeterinaria, id) {
-    // let nombreVeterinariaAlta : string = readlineSync.question("Ingrese el nombre de la Veterinaria a dar de alta: ");
-    //let direccionVeterinariaAlta : string = readlineSync.question("Ingrese la dirección de la Veterinaria a dar de alta: ");
-    var nombreVeterinariaAlta = "Fernando";
-    var direccionVeterinariaAlta = "San Martín N° 1578";
+    var nombreVeterinariaAlta = readlineSync.question("Ingrese el nombre de la Veterinaria a dar de alta: ");
+    var direccionVeterinariaAlta = readlineSync.question("Ingrese la dirección de la Veterinaria a dar de alta: ");
     var newVeterinaria = new Veterinaria_1["default"](nombreVeterinariaAlta, direccionVeterinariaAlta, id);
     arregloVeterinaria.push(newVeterinaria);
+    return arregloVeterinaria;
 }
 exports.darDeAltaVeterinaria = darDeAltaVeterinaria;
 function darDeAltaCliente(arregloCliente, idClienteAlta) {
-    // let nombreClienteAlta : string = readlineSync.question("Ingrese el nombre del Cliente a dar de alta: ");
-    //let telefonoClienteAlta : number = readlineSync.question("Ingrese el teléfono del Cliente a dar de alta: ");
-    var nombreClienteAlta = "Laura";
-    var telefonoClienteAlta = 2494897563;
+    var nombreClienteAlta = readlineSync.question("Ingrese el nombre del Cliente a dar de alta: ").toUpper();
+    var telefonoClienteAlta = readlineSync.question("Ingrese el teléfono del Cliente a dar de alta: ").toUpper();
     var newCliente = new Cliente_1["default"](nombreClienteAlta, telefonoClienteAlta, idClienteAlta, false, 0);
     arregloCliente.push(newCliente);
 }
@@ -186,15 +189,132 @@ function bajaProveedores(arreglo) {
     }
 }
 exports.bajaProveedores = bajaProveedores;
+//FUNCIONES MODIFICACIONES
+function modificarVeterinaria(arreglo) {
+    console.table(arreglo);
+    var i = 0;
+    var esta = false;
+    var id = Number(readlineSync.question("Ingrese el ID de CLIENTE que desee Modificar: "));
+    while (esta == false && i < arreglo.length) {
+        if (arreglo[i].getIdVeterinaria() == id) {
+            console.table(arreglo[i]);
+            console.log("Nombre: ".concat(arreglo[i].getNombreVeterinaria(), " \nDireccion: ").concat(arreglo[i].getDireccionVeterinaria()));
+            var modificador = Number(readlineSync.question("\n1)Modificar nombre\n2)Modificar direccion\n"));
+            switch (modificador) {
+                case 1:
+                    var nombreNuevo = (readlineSync.question("Modificando-->".concat(arreglo[i].getNombreVeterinaria(), "\n")));
+                    arreglo[i].setNombreVeterinaria(nombreNuevo);
+                    break;
+                case 2:
+                    var direccionNueva = (readlineSync.question("Modificando-->".concat(arreglo[i].getDireccionVeterinaria(), "\n")));
+                    arreglo[i].setDireccionVeterinaria(direccionNueva);
+                    break;
+                default:
+                    break;
+            }
+            esta = true;
+        }
+        else {
+            i++;
+            if (i == arreglo.length) {
+                console.log("No esta el ID");
+                break;
+            }
+        }
+    }
+}
+exports.modificarVeterinaria = modificarVeterinaria;
+//Modificar CLIENTE
+function modificarCliente(arreglo) {
+    console.table(arreglo);
+    var i = 0;
+    var esta = false;
+    var id = Number(readlineSync.question("Ingrese el ID de CLIENTE que desee Modificar: "));
+    while (esta == false && i < arreglo.length) {
+        if (arreglo[i].getIdCliente() == id) {
+            console.table(arreglo[i]);
+            console.log("Nombre: ".concat(arreglo[i].getNombrePersona(), " \nTelefono: ").concat(arreglo[i].getTelefonoPersona(), " "));
+            var modificador = Number(readlineSync.question("1)Modificar Nombre\n2)modificar TELEFONO:\n"));
+            switch (modificador) {
+                case 1:
+                    var nombreNuevo = (readlineSync.question("Modificando-->".concat(arreglo[i].getNombrePersona(), "\n")));
+                    arreglo[i].setNombrePersona(nombreNuevo);
+                    break;
+                case 2:
+                    var telefonoNuevo = Number((readlineSync.question("Modificando-->".concat(arreglo[i].getTelefonoPersona(), "\n"))));
+                    arreglo[i].setTelefonoPersona(telefonoNuevo);
+                    break;
+                case 3:
+                    //modificar mascota                        
+                    break;
+                default:
+                    break;
+            }
+            esta = true;
+        }
+        else {
+            i++;
+            if (i == arreglo.length) {
+                console.log("No esta el ID");
+                break;
+            }
+        }
+    }
+}
+exports.modificarCliente = modificarCliente;
+function menuModificarMascota() {
+}
+function modificarProveedor(arreglo) {
+    console.table(arreglo);
+    var i = 0;
+    var esta = false;
+    var id = Number(readlineSync.question("Ingrese el ID de Proveedor que desee Modificar: "));
+    while (esta == false && i < arreglo.length) {
+        if (arreglo[i].getIdProveedor() == id) {
+            console.table(arreglo[i]);
+            console.log("Nombre: ".concat(arreglo[i].getNombrePersona(), " \nDireccion: ").concat(arreglo[i].getTelefonoPersona(), " "));
+            var modificador = Number(readlineSync.question("1)Modificar Nombre\n2)Modificar Telefono:\n"));
+            switch (modificador) {
+                case 1:
+                    var nombreNuevo = (readlineSync.question("Modificando-->".concat(arreglo[i].getNombrePersona(), "\n")));
+                    arreglo[i].setNombrePersona(nombreNuevo);
+                    break;
+                case 2:
+                    var telefonoNuevo = Number((readlineSync.question("Modificando-->".concat(arreglo[i].getTelefonoPersona(), "\n"))));
+                    arreglo[i].setTelefonoPersona(telefonoNuevo);
+                    break;
+                default:
+                    break;
+            }
+            esta = true;
+        }
+        else {
+            i++;
+            if (i == arreglo.length) {
+                console.log("No esta el ID");
+                break;
+            }
+        }
+    }
+}
+exports.modificarProveedor = modificarProveedor;
 function verMenuPrincipal() {
-    console.log("MENU:\n1)MENU VETERINARIAS \n2)MENU CLIENTES \n3)MENU PACIENTES \n4)MENU PROVEEDORES");
+    console.log("MENU PRINCIPAL:\n1)MENU VETERINARIAS \n2)MENU CLIENTES \n3)MENU PACIENTES \n4)MENU PROVEEDORES");
     var opcionMP = Number(readlineSync.question("INGRESE LA OPCION: "));
+    console.clear();
     return opcionMP;
 }
 exports.verMenuPrincipal = verMenuPrincipal;
 function verMenuSecundario() {
-    console.log("MENU:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n0)SALIR");
+    console.log("MENU SECUNDARIO:\n1)DAR DE ALTA \n2)BORRAR REGISTRO \n3)MODIFICAR REGISTRO\n0)SALIR");
     var opcionMS = Number(readlineSync.question("INGRESE LA OPCION: "));
+    console.clear();
     return opcionMS;
 }
 exports.verMenuSecundario = verMenuSecundario;
+function pulsar(tecla) {
+    tecla = Number(readlineSync.question("Para continuar pulse cualquier tecla"));
+    console.clear();
+    return 0;
+}
+exports.pulsar = pulsar;
